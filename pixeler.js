@@ -1,5 +1,5 @@
 var colors = require('colors');
-var points = create2dArray(20,20);
+var points = create2dArray(50,50);
 var pix = '▇';
 function repeat (str, times) {
     var index = 0,
@@ -119,5 +119,5 @@ function draw_circle (xc, yc, r, fill, c) {
     }
 }
 
-draw_circle(0, 0, 10, false, 'red');
+draw_circle(20, 20, 20, false, 'red');
 stroke(points);
