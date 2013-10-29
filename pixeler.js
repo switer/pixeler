@@ -118,6 +118,43 @@ function draw_circle (xc, yc, r, fill, c) {
         }
     }
 }
+function lineBresenham(x1, y1, x2, y2, color)
+{
+    var x = x1,
+        y = y1,
+        dx = Math.abs(x2 - x1),
+        dy = Math.abs(y2 - y1),
+        s1 = x2 > x1 ? 1 : -1,
+        s2 = y2 > y1 ? 1 : -1;
+    
+    var interchange = false;    // 默认不互换 dx、dy
+    if (dy > dx)                // 当斜率大于 1 时，dx、dy 互换
+    {
+        var temp = dx;
+        dx = dy;
+        dy = temp;
+        interchange = true;
+    }
+    
+    var p = 2 * dy - dx;
+    for(var i = 0; i < dx; i++)
+    {
+        putPoint(x, y, color);
+        if (p >= 0)
+        {
+            if (!interchange)       // 当斜率 < 1 时，选取上下象素点
+                y += s2;
+            else                    // 当斜率 > 1 时，选取左右象素点
+                x += s1;
+            p -= 2 * dx;
+        }
+        if (!interchange)
+            x += s1;                // 当斜率 < 1 时，选取 x 为步长
+        else
+            y += s2;                // 当斜率 > 1 时，选取 y 为步长
+        p += 2 * dy;
+    }
+}
 
 draw_circle(20, 20, 20, false, 'red');
 stroke(points);
