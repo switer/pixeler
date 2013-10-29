@@ -1,0 +1,27 @@
+{
+  "name": "pixeler",
+  "version": "0.0.1",
+  "description": "Drawing in your terminal, such as draw line, circle, polygon.make your terminal like canvas.",
+  "main": "pixeler",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/switer/pixeler.git"
+  },
+  "keywords": [
+    "drawing",
+    "terminal",
+    "pixel",
+    "canvas"
+  ],
+  "author": "switer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/switer/pixeler/issues"
+  },
+  "dependencies": {
+    "colors": "~0.6.2"
+  }
+}
