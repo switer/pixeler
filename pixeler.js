@@ -1,5 +1,5 @@
 var colors = require('colors');
-var points = create2dArray(50,50);
+var points = create2dArray(41,41);
 var pix = '▇';
 function repeat (str, times) {
     var index = 0,
@@ -155,6 +155,9 @@ function lineBresenham(x1, y1, x2, y2, color)
         p += 2 * dy;
     }
 }
-
+draw_circle(20, 20, 10, true, 'white');
+lineBresenham(0,0, 40,40, 'blue');
+lineBresenham(0,40, 40,0, 'green');
+lineBresenham(0,20, 40,20, 'cyan');
 draw_circle(20, 20, 20, false, 'red');
 stroke(points);
