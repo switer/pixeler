@@ -1,5 +1,6 @@
-var colors = require('colors');
-var points = create2dArray(41,41);
+var colors = require('colors'),
+    _ = require('underscore');
+var points = create2dArray(42,42);
 var pix = '▇';
 function repeat (str, times) {
     var index = 0,
@@ -22,30 +23,7 @@ function putPoint(x,y,color) {
     if (y >= points.length || x >= points.length) return;
     if (y < 0 || x < 0) return;
     points[y][x] = color;
-    // console.log(x, y);
 }
-function circle(cx, cy, r, color) {
-
-    var x=0,
-        y=r,
-        F=3-2*r;
-
-    while(x < y){
-
-        putPoint(cx + x,cy + y,color);
-        if(F<0)
-            F += 4*x+6;
-        else {
-            F += 4*(x-y)+10;
-            y--;
-        }
-
-        x++;
-    }
-    if (x == y) putPoint(cx + x,cy + y,color);
-}
-
-
 function stroke (points) {
     var ouput = '';
 
@@ -118,6 +96,16 @@ function draw_circle (xc, yc, r, fill, c) {
         }
     }
 }
+function rect (x, y, width, height, color) {
+    for (var i = 0; i <= width; i ++) {
+        putPoint(x + i, y, color);
+        putPoint(x + i, y + height, color);
+    }
+    for (var i = 0; i <= height; i ++) {
+        putPoint(x, y + i, color);
+        putPoint(x + width, y + i, color);
+    }
+}
 function lineBresenham(x1, y1, x2, y2, color)
 {
     var x = x1,
@@ -160,4 +148,5 @@ lineBresenham(0,0, 40,40, 'blue');
 lineBresenham(0,40, 40,0, 'green');
 lineBresenham(0,20, 40,20, 'cyan');
 draw_circle(20, 20, 20, false, 'red');
+rect(0,0,20,20, 'yellow')
 stroke(points);
