@@ -1,6 +1,6 @@
 var colors = require('colors'),
     _ = require('underscore');
-var points = create2dArray(42,42);
+var points = create2dArray(52,52);
 var pix = '▇';
 function repeat (str, times) {
     var index = 0,
@@ -143,10 +143,34 @@ function lineBresenham(x1, y1, x2, y2, color)
         p += 2 * dy;
     }
 }
-draw_circle(20, 20, 10, true, 'white');
+draw_circle(20, 20, 9, false, 'white');
 lineBresenham(0,0, 40,40, 'blue');
-lineBresenham(0,40, 40,0, 'green');
-lineBresenham(0,20, 40,20, 'cyan');
+// lineBresenham(0,40, 40,0, 'green');
+// lineBresenham(0,20, 40,20, 'cyan');
 draw_circle(20, 20, 20, false, 'red');
-rect(0,0,20,20, 'yellow')
+rect(10,10,20,20, 'yellow')
+bezier(0,20, 10,0, 50,30, 'grey');
 stroke(points);
+
+
+function getPt(n1, n2, perc)
+{
+    var  diff = n2 - n1;
+    return n1 + ( diff * perc );
+}    
+function bezier(x1, y1, x2, y2, x3, y3, color ) {
+    for( var i = 0 ; i < 1 ; i += 0.01 )
+    {
+        // The Green Line
+        xa = getPt( x1 , x2 , i );
+        ya = getPt( y1 , y2 , i );
+        xb = getPt( x2 , x3 , i );
+        yb = getPt( y2 , y3 , i );
+
+        // The Black Dot
+        x = getPt( xa , xb , i );
+        y = getPt( ya , yb , i );
+
+        putPoint( Math.round(x) , Math.round(y) , color );
+    }
+}
