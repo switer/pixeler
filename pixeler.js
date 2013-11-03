@@ -23,6 +23,7 @@ function putPoint(x,y,color) {
     if (y >= points.length || x >= points.length) return;
     if (y < 0 || x < 0) return;
     points[y][x] = color;
+    // console.log(x,y)
 }
 function stroke (points) {
     var ouput = '';
@@ -143,14 +144,6 @@ function lineBresenham(x1, y1, x2, y2, color)
         p += 2 * dy;
     }
 }
-draw_circle(20, 20, 9, false, 'white');
-lineBresenham(0,0, 40,40, 'blue');
-// lineBresenham(0,40, 40,0, 'green');
-// lineBresenham(0,20, 40,20, 'cyan');
-draw_circle(20, 20, 20, false, 'red');
-rect(10,10,20,20, 'yellow')
-bezier(0,20, 10,0, 50,30, 'grey');
-stroke(points);
 
 
 function getPt(n1, n2, perc)
@@ -162,15 +155,105 @@ function bezier(x1, y1, x2, y2, x3, y3, color ) {
     for( var i = 0 ; i < 1 ; i += 0.01 )
     {
         // The Green Line
-        xa = getPt( x1 , x2 , i );
-        ya = getPt( y1 , y2 , i );
-        xb = getPt( x2 , x3 , i );
-        yb = getPt( y2 , y3 , i );
+        var xa = getPt( x1 , x2 , i );
+        var ya = getPt( y1 , y2 , i );
+        var xb = getPt( x2 , x3 , i );
+        var yb = getPt( y2 , y3 , i );
 
         // The Black Dot
-        x = getPt( xa , xb , i );
-        y = getPt( ya , yb , i );
+        var x = getPt( xa , xb , i );
+        var y = getPt( ya , yb , i );
 
         putPoint( Math.round(x) , Math.round(y) , color );
     }
 }
+function cubicBezier(x1, y1, x2, y2, x3, y3,x4,y4, color ) {
+    for( var i = 0 ; i < 1 ; i += 0.01 )
+    {
+        // The Green Line
+        var xa = getPt( x1 , x2 , i );
+        var ya = getPt( y1 , y2 , i );
+        var xb = getPt( x2 , x3 , i );
+        var yb = getPt( y2 , y3 , i );
+
+        // The Black Dot
+        var x = getPt( xa , xb , i );
+        var y = getPt( ya , yb , i );
+
+        putPoint( Math.round(x) , Math.round(y) , color );
+    }
+}
+function getBezierPoint(n1, n2, n3, t) {
+    return Math.pow((1-t), 2)*n1 + 2*t*(1-t)*n2 + Math.pow(t,2)*n3; 
+}
+function getCubicBezierPoint(n1,n2,n3,n4, t) {
+    return Math.pow((1-t), 3)*n1 + 3*t*Math.pow((1-t),2)*n2 + 3*Math.pow(t,2)*(1-t)*n3 + Math.pow(t,3)*n4;
+}
+function customBezier (x1, y1, x2, y2, x3, y3, color) {
+    for( var i = 0 ; i < 1 ; i += 0.01 )
+    {
+        var xa = getBezierPoint(x1, x2, x3, i);
+        var ya = getBezierPoint(y1, y2, y3, i);
+
+        putPoint( Math.round(xa) , Math.round(ya) , color );
+    }
+}
+function customCubicBezier (x1, y1, x2, y2, x3, y3, x4,y4, color) {
+    for( var i = 0 ; i < 1 ; i += 0.01 )
+    {
+        var xa = getCubicBezierPoint(x1, x2, x3,x4, i);
+        var ya = getCubicBezierPoint(y1, y2, y3,y4, i);
+
+        putPoint( Math.round(xa) , Math.round(ya) , color );
+    }
+}
+
+function factoria(n) {
+    if (!n || (n%1) !== 0) return 1;
+    else {
+        var value = 1;
+        while (n) {
+            value *= n--;
+        }
+        return value;
+    }
+}
+
+function arrangement (n, i) {
+    return factoria(n)/(factoria(i)*factoria(n-i));
+}
+function bezierPoint (n, i, p, t) {
+    return arrangement(n,i)*p*Math.pow(1-t,n-i)*Math.pow(t,i);
+}
+function commonBezier (/*x1,y1,x2,y2,...,xn,yn, color*/) {
+    var args = Array.prototype.slice.call(arguments),
+        color = args.pop(),
+        points = args,
+        n = points.length/2 - 1;
+
+    for (var i = 0; i < 1; i += 0.01) {
+        var x = 0,
+            y = 0;
+
+        for (var j = 0; j < n+1; j ++) {
+            x += bezierPoint(n, j, points[j*2], i);
+            y += bezierPoint(n, j, points[j*2 + 1], i);
+        }
+        putPoint( Math.round(x) , Math.round(y) , color );
+    }
+    // var length = parseInt(points.length/2);
+
+}
+// draw_circle(20, 20, 9, false, 'white');
+// lineBresenham(0,0, 40,40, 'blue');
+// lineBresenham(0,40, 40,0, 'green');
+// lineBresenham(0,20, 40,20, 'cyan');
+// draw_circle(20, 20, 20, false, 'red');
+// rect(10,10,20,20, 'yellow')
+// bezier(0,20, 10,0, 50,30, 'yellow');
+// customBezier(0,30, 10,10, 50,40, 'grey')
+// customCubicBezier(0,20, 10,0,40,15, 50,30, 'yellow');
+commonBezier(0,20,10,0,40,15,50,30, 'yellow');
+commonBezier(0,20,10,0,40,15,50,30, 50, 40, 'blue');
+commonBezier(0,20,10,0,40,15, 'green');
+stroke(points);
