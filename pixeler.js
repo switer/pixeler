@@ -150,6 +150,7 @@ lineBresenham(0,0, 40,40, 'blue');
 draw_circle(20, 20, 20, false, 'red');
 rect(10,10,20,20, 'yellow')
 bezier(0,20, 10,0, 50,30, 'grey');
+bezier(0,10, 30,50, 50,20, 'green');
 stroke(points);
 
 
