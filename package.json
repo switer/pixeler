@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "colors": "~0.6.2",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "sutils": "0.0.0"
   }
 }
