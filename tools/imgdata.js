@@ -24,7 +24,8 @@ module.exports =  {
     pixelsto2d: function (width, height, pixels, options) {
         options = options || {};
 
-        var idata = createImageData(width, height, options.whitespace ||　'  ');
+        var idata = this.create2d(width, height, options.whitespace ||　'  ');
+        
         for (var i = pixels.length - 1; i >= 0; i--) {
             var pix = pixels[i];
             idata[pix.y][pix.x] = options.pixel || '▇';

@@ -1,27 +1,6 @@
-var pxxl = require("./pxxl"),
-    util = require()
+var pxxl = require("../lib/pxxl/pxxl"),
+    imgdata = require('../tools/imgdata');
 
-function pix2imagedata (width, height, pixels) {
-    var idata = createImageData(width, height, '  ');
-    for (var i = pixels.length - 1; i >= 0; i--) {
-        var pix = pixels[i];
-        idata[pix.y][pix.x] = '▇';
-    };
-    return idata;
-}
-function createImageData (row, col, value) {
-    var imageData = [],
-        rowArray = [];
-
-    for (var i =0 ; i < col; i ++) {
-        var rowArray = [];
-        for (var j =0 ; j < row; j ++) {
-            rowArray.push(value);
-        }
-        imageData.push(rowArray);
-    }
-    return imageData;
-}
 
 function draw(img) {
     var str = '';
@@ -51,8 +30,8 @@ function max (pixels) {
         width: maxHeight + 1
     }
 }
-pxxl('./fonts/c64.bdf', 'hello', function(text, pixels, font) {
+pxxl('hello', function(text, pixels, font) {
     var maxSize = max(pixels);
-    var img = pix2imagedata(maxSize.width, maxSize.height, pixels);
+    var img = imgdata.pixelsto2d(maxSize.width, maxSize.height, pixels);
     draw(img);
 });
