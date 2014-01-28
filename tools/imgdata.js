@@ -33,11 +33,25 @@ module.exports =  {
         return idata;
     },
     /**
+     *  convert pixels which from pxxl to image data 2d-array 
+     **/
+    pixels2unit8: function (width, height, pixels, options) {
+        options = options || {};
+
+        var idata = new Array(width*height*4);
+        
+        for (var i = pixels.length - 1; i >= 0; i--) {
+            var pix = pixels[i];
+            idata[pix.y][pix.x] = options.pixel || '▇';
+        };
+        return idata;
+    },
+    /**
      *  Create unit8 array from 2d-array image data 
      **/
     unit8form2d: function (imageData, color) {
 
-        var colors = (color || '255,255,255,255').split(','),
+        var colors = (color || '0,0,0,255').split(','),
             unit8array = [];
 
         colors[0] = parseInt(colors[0]);
